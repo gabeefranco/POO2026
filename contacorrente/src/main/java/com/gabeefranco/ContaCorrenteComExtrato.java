@@ -49,7 +49,7 @@ public class ContaCorrenteComExtrato {
         if (valor <= 0) {
             throw new IllegalArgumentException("Valor do depósito deve ser positivo.");
         }
-        extrato[extratoIdx] = new Operacao(LocalDate.now(), "DEPOSITO", valor);
+        extrato[extratoIdx] = new Operacao(LocalDate.now(), TipoOperacao.DEPOSITO, valor);
         extratoIdx++;
         saldo += valor;
     }
@@ -64,7 +64,7 @@ public class ContaCorrenteComExtrato {
         if (valor >= saldo) {
             throw new IllegalArgumentException("Saldo insuficiente.");
         }
-        extrato[extratoIdx] = new Operacao(LocalDate.now(), "RETIRADA", valor);
+        extrato[extratoIdx] = new Operacao(LocalDate.now(), TipoOperacao.RETIRADA, valor);
         extratoIdx++;
         saldo -= valor;
     }
@@ -85,7 +85,7 @@ public class ContaCorrenteComExtrato {
         if (!contaDestino.isAtiva()) {
             throw new IllegalStateException("Conta destino inativa");
         }
-        extrato[extratoIdx] = new Operacao(LocalDate.now(), "RETIRADA", valor);
+        extrato[extratoIdx] = new Operacao(LocalDate.now(), TipoOperacao.RETIRADA, valor);
         extratoIdx++;
         // Faz a transferencia
         saldo -= valor;
@@ -124,7 +124,8 @@ public class ContaCorrenteComExtrato {
             Operacao op = extrato[i];
             if (op != null && op.getData().getYear() == ano && op.getData().getMonthValue() == mes) {
                 String dataFormatada = op.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                resultado += "OPERAÇÃO EM " + dataFormatada + ": TIPO=" + op.getTipo() + ", VALOR=" + op.getValor()
+                resultado += "OPERAÇÃO EM " + dataFormatada + ": TIPO=" + op.getTipo().toString() + ", VALOR="
+                        + op.getValor()
                         + "\n";
 
             }

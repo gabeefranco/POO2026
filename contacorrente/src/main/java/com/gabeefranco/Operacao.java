@@ -4,12 +4,15 @@ import java.time.LocalDate;
 
 public class Operacao {
     private LocalDate data;
-    private String tipo;
+    private TipoOperacao tipo;
     private double valor;
 
-    public Operacao(LocalDate data, String tipo, double valor) {
+    public Operacao(LocalDate data, TipoOperacao tipo, double valor) {
         this.data = data;
         this.tipo = tipo;
+        if (valor < 0) {
+            throw new IllegalArgumentException("Valor de operação não pode ser negativo");
+        }
         this.valor = valor;
     }
 
@@ -17,7 +20,7 @@ public class Operacao {
         return data;
     }
 
-    public String getTipo() {
+    public TipoOperacao getTipo() {
         return tipo;
     }
 

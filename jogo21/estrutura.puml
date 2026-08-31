@@ -1,0 +1,59 @@
+@startuml Jogo21
+
+enum Naipe {
+    OUROS
+    PAUS
+    COPAS
+    ESPADAS
+}
+
+class Carta {
+    -naipe:Naipe
+    -numero:int
+    -valor:int
+}
+
+class Baralho {
+    -cartas:List<Carta>
+    +embaralhar()void
+    +distribuir(destino: Mao)Carta
+}
+
+class Mao {
+    -cartas:List<Carta>
+    +adicionar(entra: Carta)void
+    +calcularValor()int
+    +estaEstourada()boolean
+}
+
+class Jogador {
+    -nome:String
+    -mao:Mao
+    +jogar()void
+}
+
+class Dealer {
+    -mao:Mao
+    +jogar()void
+}
+
+class Jogo {
+    -jogadores:List<Jogador>
+    -dealer:Dealer
+    -baralho:Baralho
+    +iniciar()void
+    +finalizar()void
+}
+
+Carta --> Naipe
+Baralho "1" *-- "*" Carta
+Mao "1" *-- "*" Carta
+Baralho ..> Mao
+Jogo "1" *-- "*" Jogador
+Jogo "1" *-- "1" Dealer
+Jogo "1" *-- "1" Baralho
+Jogador "1" *-- "1" Mao
+Dealer "1" *-- "1" Mao
+
+
+@enduml
