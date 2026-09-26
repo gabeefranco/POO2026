@@ -44,6 +44,7 @@ public class Trem {
             aux = aux.getProximo();
         }
 
+        ultimoCarro.setTrem(null);
         ultimoCarro = aux;
         ultimoCarro.setProximo(null);
     }
@@ -59,14 +60,30 @@ public class Trem {
 	public CarroFerroviario getPrimeiroCarro() {
 		return primeiroCarro;
 	}
+
 	public CarroFerroviario getUltimoCarro() {
 		return ultimoCarro;
 	}
 
-	@Override
+    public String listaDeVagoes() {
+        CarroFerroviario aux = primeiroCarro;
+        String resultado = "";
+        do {
+            resultado += aux.toString() + "\n";
+            aux = aux.getProximo();
+        }while(aux.getProximo() != null);
+
+        return resultado;
+    }
+
+
 	public String toString() {
         int qtdLocomotiva = 0;
         int qtdVagoes = 0;
+        int qtdPassageiros = 0;
+        int assentosRestaurante = 0;
+        int cargaNaoRefrigerada = 0;
+        int cargaRefrigerada = 0;
         if(primeiroCarro != null) {
             CarroFerroviario aux = primeiroCarro;
             while(aux != null) {
@@ -76,10 +93,31 @@ public class Trem {
                 if(aux instanceof Vagao) {
                     qtdVagoes++;
                 }
+                if(aux instanceof VagaoDePassageiros v) {
+                    qtdPassageiros += v.getAssentos();
+                }
+                if(aux instanceof VagaoRestaurante v) {
+                    assentosRestaurante += v.getAssentos();
+                }
+                if(aux instanceof VagaoDeCargaRefrigerado v) {
+                    cargaRefrigerada += v.getCapacidadeCarga();
+                } else if(aux instanceof VagaoDeCarga v) {
+                    cargaNaoRefrigerada += v.getCapacidadeCarga();
+                }
+
                 aux = aux.getProximo();
             }
         }
-		return "Trem " + id + "\n  Locomotivas: " + qtdLocomotiva + "\n  Vagoes: " + qtdVagoes;
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("Trem " + id + "\n")
+        .append("  Locomotivas: " + qtdLocomotiva + "\n")
+        .append("  Vagões: " + qtdVagoes + "\n")
+        .append("  Capacidade de Passageiros: " + qtdPassageiros + "\n")
+        .append("  Assentos em Vagões Restaurante: " + assentosRestaurante + "\n")
+        .append("  Capacidade de Carga Não Refrigerada: " + cargaNaoRefrigerada + "\n")
+        .append("  Capacidade de Carga Refrigerada: " + cargaRefrigerada + "\n");
+        return resultado.toString();
+
 	}
 
 
