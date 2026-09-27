@@ -9,12 +9,17 @@ public class VagaoDeCarga extends Vagao {
         this.capacidadeCarga = capacidadeCarga;
     }
 
-	public int getCapacidadeCarga() {
-		return capacidadeCarga;
-	}
-
-    public String toString() {
-        return tipo + " " + id + ":\n  Capacidade de Carga: " + capacidadeCarga;
+    public int getCapacidadeCarga() {
+        return capacidadeCarga;
     }
 
+    @Override
+    public double getPesoMaximoToneladas() {
+        return capacidadeCarga;
+    }
+
+    @Override
+    public String toString() {
+        return tipo + " " + id + ":\n  Capacidade de Carga: " + capacidadeCarga + " toneladas";
+    }
 }
